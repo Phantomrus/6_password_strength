@@ -18,7 +18,7 @@ def blacklist_check(password):
 def data_check(password, data):
     pass_include_personal = 0
     for element in data:
-        if password.find(element) != -1:
+        if element in password:
             pass_include_personal += 1
     if pass_include_personal >= 2:
         return -3
