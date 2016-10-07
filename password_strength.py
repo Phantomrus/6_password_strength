@@ -1,4 +1,5 @@
 import math
+import string
 
 def blacklist_check(password):
     exist_in_blacklist = False
@@ -28,10 +29,10 @@ def data_check(password, data):
         return 0
 
 def basic_algorithm(password):
-    alpha = "abcdefghijklmnopqrstuvwxyz"
-    upper = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    upper_punct = "~`!@#$%^&*()-_+="
-    digits = "1234567890"
+    alpha = string.ascii_lowercase
+    upper = string.ascii_uppercase
+    upper_punct = string.punctuation
+    digits = string.digits
 
     totalChars = 0x7f - 0x20 # Символы с 32 по 127 таблицы ASCII. Это множество включает в себя строчные и заглавные буквы латиницы, цифры и набор спецсимволов.
     alphaChars = len(alpha)
