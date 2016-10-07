@@ -34,12 +34,12 @@ def basic_algorithm(password):
     upper_punct = string.punctuation
     digits = string.digits
 
-    totalChars = 0x7f - 0x20 # Символы с 32 по 127 таблицы ASCII. Это множество включает в себя строчные и заглавные буквы латиницы, цифры и набор спецсимволов.
+    total_considered_chars = 0x7f - 0x20 # Символы с 32 по 127 таблицы ASCII. Это множество включает в себя строчные и заглавные буквы латиницы, цифры и набор спецсимволов.
     alphaChars = len(alpha)
     upperChars = len(upper)
     upper_punctChars = len(upper_punct)
     digitChars = len(digits)
-    otherChars = totalChars - (alphaChars + upperChars + upper_punctChars + digitChars) 
+    otherChars = total_considered_chars - (alphaChars + upperChars + upper_punctChars + digitChars) 
 
     # Ниже следуют переменные, показывающие наличие групп символов в пароле.
     alpha_exists = False
@@ -48,7 +48,7 @@ def basic_algorithm(password):
     digit_exists = False
     other_exists = False
 
-# Проверка на то к какой группе относится символ из пароля.
+# Проверка на то к какой группе символов относится символ из пароля.
     for symbol in password:
         if symbol in alpha:
             alpha_exists = True
@@ -61,22 +61,22 @@ def basic_algorithm(password):
         else:
             other_exists = True
 
-    charset = 0 # Cуммарный размер множеств используемых символов.
+    total_charset = 0 # Cуммарный размер множеств используемых символов.
 
-# Если в пароле присутствует символ из определенной группы, увеличиваем значение charset на размер этой группы.
+# Если в пароле присутствует символ из определенной группы, увеличиваем значение total_charset на размер этой группы.
     if alpha_exists:
-        charset += alphaChars
+        total_charset += alphaChars
     if upper_exists:
-        charset += upperChars
+        total_charset += upperChars
     if upperPunct_exists:
-        charset += upper_punctChars
+        total_charset += upper_punctChars
     if digit_exists:
-        charset += digitChars
+        total_charset += digitChars
     if other_exists:
-        charset += otherChars
+        total_charset += otherChars
 
-# Для оценки стойкости используем формулу strength = ln(charset) * len(password) / ln(e)
-    pass_strength_ba = math.log(charset, math.e) * (len(password) / math.log(2, math.e))
+# Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e)
+    pass_strength_ba = math.log(total_charset, math.e) * (len(password) / math.log(2, math.e))
     if pass_strength_ba >= 100:
         return 10
     else:    
