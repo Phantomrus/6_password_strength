@@ -13,7 +13,7 @@ def blacklist_check(password):
         else:
             return 0
     except IOError:
-        print('Не удалось найти файл blacklist.txt. Проверка по списку популярных паролей не будет выполнена.\n\n')
+        print('Не удалось найти файл blacklist.txt. Проверка по списку популярных паролей не будет выполнена.\n')
         return 0
 
 def data_check(password, data):
@@ -28,7 +28,7 @@ def data_check(password, data):
     else:
         return 0
 
-def basic_algorithm(password):
+def total_charset_definition(password):
     alpha = string.ascii_lowercase
     upper = string.ascii_uppercase
     upper_punct = string.punctuation
@@ -75,7 +75,11 @@ def basic_algorithm(password):
     if other_exists:
         total_charset += otherChars
 
-# Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e)
+    return total_charset
+
+def strength_definition(password):
+    # Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e)
+    total_charset = total_charset_definition(password)
     pass_strength_ba = math.log(total_charset, math.e) * (len(password) / math.log(2, math.e))
     if pass_strength_ba >= 100:
         return 10
@@ -83,8 +87,11 @@ def basic_algorithm(password):
         return pass_strength_ba//10
 
 def strength_calculation(password, personal_data):
-    pass_strength = float(basic_algorithm(password))+ float(blacklist_check(password)) + float(data_check(password, personal_data))
-    return pass_strength
+    pass_strength = float(strength_definition(password))+ float(blacklist_check(password)) + float(data_check(password, personal_data))
+    if pass_strength <= 0:
+        return 0
+    else:
+        return pass_strength
 
 
 if __name__ == '__main__':
