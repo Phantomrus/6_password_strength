@@ -35,16 +35,16 @@ def total_charset_definition(password):
     digits = string.digits
 
     total_considered_chars = 0x7f - 0x20 # Символы с 32 по 127 таблицы ASCII. Это множество включает в себя строчные и заглавные буквы латиницы, цифры и набор спецсимволов.
-    alphaChars = len(alpha)
-    upperChars = len(upper)
-    upper_punctChars = len(upper_punct)
-    digitChars = len(digits)
-    otherChars = total_considered_chars - (alphaChars + upperChars + upper_punctChars + digitChars) 
+    alpha_chars = len(alpha)
+    upper_chars = len(upper)
+    upper_punct_chars = len(upper_punct)
+    digit_chars = len(digits)
+    other_chars = total_considered_chars - (alpha_chars + upper_chars + upper_punct_chars + digit_chars) 
 
     # Ниже следуют переменные, показывающие наличие групп символов в пароле.
     alpha_exists = False
     upper_exists = False
-    upperPunct_exists = False
+    upper_punct_exists = False
     digit_exists = False
     other_exists = False
 
@@ -55,7 +55,7 @@ def total_charset_definition(password):
         elif symbol in upper:
             upper_exists = True
         elif symbol in upper_punct:
-            upperPunct_exists = True
+            upper_punct_exists = True
         elif symbol in digits:
             digit_exists = True
         else:
@@ -65,15 +65,15 @@ def total_charset_definition(password):
 
 # Если в пароле присутствует символ из определенной группы, увеличиваем значение total_charset на размер этой группы.
     if alpha_exists:
-        total_charset += alphaChars
+        total_charset += alpha_chars
     if upper_exists:
-        total_charset += upperChars
-    if upperPunct_exists:
-        total_charset += upper_punctChars
+        total_charset += upper_chars
+    if upper_punct_exists:
+        total_charset += upper_punct_chars
     if digit_exists:
-        total_charset += digitChars
+        total_charset += digit_chars
     if other_exists:
-        total_charset += otherChars
+        total_charset += other_chars
 
     return total_charset
 
