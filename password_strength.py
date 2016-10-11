@@ -34,12 +34,12 @@ def total_charset_definition(password):
     upper_punct = string.punctuation
     digits = string.digits
 
-    total_considered_chars = 0x7f - 0x20 # Символы с 32 по 127 таблицы ASCII. Это множество включает в себя строчные и заглавные буквы латиницы, цифры и набор спецсимволов.
+    total_considered_ascii_chars = 0x7f - 0x20 # Символы с 32 по 127 таблицы ASCII. Это множество включает в себя строчные и заглавные буквы латиницы, цифры и набор спецсимволов.
     alpha_chars = len(alpha)
     upper_chars = len(upper)
     upper_punct_chars = len(upper_punct)
     digit_chars = len(digits)
-    other_chars = total_considered_chars - (alpha_chars + upper_chars + upper_punct_chars + digit_chars) 
+    other_chars = total_considered_ascii_chars - (alpha_chars + upper_chars + upper_punct_chars + digit_chars) 
 
     # Ниже следуют переменные, показывающие наличие групп символов в пароле.
     alpha_exists = False
@@ -78,7 +78,7 @@ def total_charset_definition(password):
     return total_charset
 
 def strength_definition(password):
-    # Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e)
+    # Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e). Описание в readme.
     total_charset = total_charset_definition(password)
     pass_strength_ba = math.log(total_charset, math.e) * (len(password) / math.log(2, math.e))
     if pass_strength_ba >= 100:
