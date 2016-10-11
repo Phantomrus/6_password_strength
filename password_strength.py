@@ -40,42 +40,24 @@ def total_charset_definition(password):
     upper_punct_chars = len(upper_punct)
     digit_chars = len(digits)
     other_chars = total_considered_ascii_chars - (alpha_chars + upper_chars + upper_punct_chars + digit_chars) 
-
-    # Ниже следуют переменные, показывающие наличие групп символов в пароле.
-    alpha_exists = False
-    upper_exists = False
-    upper_punct_exists = False
-    digit_exists = False
-    other_exists = False
-
-# Проверка на то к какой группе символов относится символ из пароля.
+    
+    total_charset = 0 # Cуммарный размер множеств используемых символов.
+    
+# Проверка на то к какой группе символов относится символ из пароля. Если в пароле присутствует символ из определенной группы, увеличиваем значение total_charset на размер этой группы.
     for symbol in password:
         if symbol in alpha:
-            alpha_exists = True
+            total_charset += alpha_chars
         elif symbol in upper:
-            upper_exists = True
+            total_charset += upper_chars
         elif symbol in upper_punct:
-            upper_punct_exists = True
+            total_charset += upper_punct_chars
         elif symbol in digits:
-            digit_exists = True
+            total_charset += digit_chars
         else:
-            other_exists = True
-
-    total_charset = 0 # Cуммарный размер множеств используемых символов.
-
-# Если в пароле присутствует символ из определенной группы, увеличиваем значение total_charset на размер этой группы.
-    if alpha_exists:
-        total_charset += alpha_chars
-    if upper_exists:
-        total_charset += upper_chars
-    if upper_punct_exists:
-        total_charset += upper_punct_chars
-    if digit_exists:
-        total_charset += digit_chars
-    if other_exists:
-        total_charset += other_chars
+            total_charset += other_chars
 
     return total_charset
+
 
 def strength_definition(password):
     # Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e). Описание в readme.
