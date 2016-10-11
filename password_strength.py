@@ -79,12 +79,15 @@ def total_charset_definition(password):
 
 def strength_definition(password):
     # Для оценки стойкости используем формулу strength = ln(total_charset) * len(password) / ln(e). Описание в readme.
+    value_for_high_strength = 100 # Порог значения для сложности 10.
+    step_of_decrease_strength = value_for_high_strength / 10 
+    
     total_charset = total_charset_definition(password)
     pass_strength_ba = math.log(total_charset, math.e) * (len(password) / math.log(2, math.e))
-    if pass_strength_ba >= 100:
+    if pass_strength_ba >= value_for_high_strength:
         return 10
     else:    
-        return pass_strength_ba//10
+        return pass_strength_ba//step_of_decrease_strength
 
 def strength_calculation(password, personal_data):
     pass_strength = float(strength_definition(password))+ float(blacklist_check(password)) + float(data_check(password, personal_data))
