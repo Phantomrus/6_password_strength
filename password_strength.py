@@ -83,18 +83,18 @@ def strength_definition(password):
     step_of_decrease_strength = value_for_high_strength / 10 
     
     total_charset = total_charset_definition(password)
-    pass_strength_ba = math.log(total_charset, math.e) * (len(password) / math.log(2, math.e))
-    if pass_strength_ba >= value_for_high_strength:
+    pass_strength = math.log(total_charset, math.e) * (len(password) / math.log(2, math.e))
+    if pass_strength >= value_for_high_strength:
         return 10
     else:    
-        return pass_strength_ba//step_of_decrease_strength
+        return pass_strength//step_of_decrease_strength
 
 def strength_calculation(password, personal_data):
-    pass_strength = float(strength_definition(password))+ float(blacklist_check(password)) + float(data_check(password, personal_data))
-    if pass_strength <= 0:
+    total_pass_strength = float(strength_definition(password))+ float(blacklist_check(password)) + float(data_check(password, personal_data))
+    if total_pass_strength <= 0:
         return 0
     else:
-        return pass_strength
+        return total_pass_strength
 
 
 if __name__ == '__main__':
@@ -114,10 +114,10 @@ if __name__ == '__main__':
 
     while True:
         user_password = input("Введите ваш пароль для проверки сложности: ")
-        pass_strength = strength_calculation(user_password.lower(), personal_data)
+        total_pass_strength = strength_calculation(user_password.lower(), personal_data)
 
         print("\nСложность вашего пароля: %s" % pass_strength)
-        if pass_strength >= 6:
+        if total_pass_strength >= 6:
             choice = input("Ваш пароль обладает достаточной сложностью. Если хотите использовать его, нажмите Y, если хотите ввести другой пароль, введите любой текст: ")
             if choice == 'Y':
                 break
